@@ -1,14 +1,14 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
-import ActivityHistory from "./ActivityHistory";
-import NewActivityType from "./activity_types/NewActivityType";
-import HomeScreen from "./HomeScreen";
-import NewEntryScreen from "./NewEntry";
-import Settings from "./Settings";
-import { HomeParamList } from "./types";
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import ActivityHistory from './ActivityHistory';
+import NewActivityType from './activity_types/NewActivityType';
+import HomeScreen from './HomeScreen';
+import NewEntryScreen from './NewEntry';
+import Settings from './Settings';
+import { HomeParamList } from './types';
 
 const HomeNavigator = createStackNavigator<HomeParamList>();
-const Routes = () => {
+function Routes() {
   return (
     <HomeNavigator.Navigator>
       <HomeNavigator.Screen
@@ -19,29 +19,29 @@ const Routes = () => {
       <HomeNavigator.Screen
         name="AddEntry"
         component={NewEntryScreen}
-        options={{ headerBackTitle: "Back", title: "New Activity" }}
+        options={{ headerBackTitle: 'Back', title: 'New Activity' }}
       />
       <HomeNavigator.Screen
         name="Settings"
         component={Settings}
-        options={{ headerBackTitle: "Back" }}
+        options={{ headerBackTitle: 'Back' }}
       />
       <HomeNavigator.Screen
         name="ActivityHistory"
         component={ActivityHistory}
-        options={{ headerBackTitle: "Back", title: "Activity History" }}
+        options={{ headerBackTitle: 'Back', title: 'Activity History' }}
       />
       <HomeNavigator.Screen
         name="NewActivityType"
         component={NewActivityType}
         options={{
-          headerBackTitle: "Back",
-          title: "New Activity Type",
-          presentation: "modal",
+          headerBackTitle: 'Back',
+          title: 'New Activity Type',
+          presentation: 'modal',
         }}
       />
     </HomeNavigator.Navigator>
   );
-};
+}
 
 export default Routes;

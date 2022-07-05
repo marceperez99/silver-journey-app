@@ -1,27 +1,24 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Animated,
   StyleProp,
   useWindowDimensions,
   ViewStyle,
-} from "react-native";
-import { Colors, TouchableOpacity, View, Text } from "react-native-ui-lib";
-import { COLOR_RANGE } from "../colors";
-import { Entypo } from "@expo/vector-icons";
-import { PieChart } from "react-native-chart-kit";
-import { FontAwesome } from "@expo/vector-icons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { HomeNavProps, HomeParamList } from "../screens/types";
-import useLanguageProgress from "../hooks/useLanguageProgress";
-import moment, { lang } from "moment";
-import RecentActivity from "./RecentActivity";
-import { ScrollView } from "react-native-gesture-handler";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useToast } from "../hooks/useToast";
+} from 'react-native';
+import { Colors, TouchableOpacity, View, Text } from 'react-native-ui-lib';
+import { FontAwesome } from '@expo/vector-icons';
+import { PieChart } from 'react-native-chart-kit';
+import { useFocusEffect } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeParamList } from '../screens/types';
+import useLanguageProgress from '../hooks/useLanguageProgress';
+import RecentActivity from './RecentActivity';
+import { useToast } from '../hooks/useToast';
 
 type PieChartData = {
   name: string;
-  activity: string;
+  activity: number;
   color: string;
   legendFontColor: string;
   legendFontSize: number;
@@ -29,17 +26,17 @@ type PieChartData = {
 type PieChartSectionProps = {
   activities: Activity[];
 };
-const PieChartSection = ({ activities }: PieChartSectionProps) => {
+function PieChartSection({ activities }: PieChartSectionProps) {
   const { width } = useWindowDimensions();
   const activityData = useMemo<PieChartData[]>(() => {
-    const activitiesMap: { [key: string]: any } = {};
+    const activitiesMap: { [key: string]: PieChartData } = {};
     activities.forEach((activity: Activity) => {
       if (!activitiesMap[activity.type.name]) {
         activitiesMap[activity.type.name] = {
           name: activity.type.name,
           activity: activity.duration,
           color: activity.type.color,
-          legendFontColor: "#7F7F7F",
+          legendFontColor: '#7F7F7F',
           legendFontSize: 15,
         };
       } else {
@@ -62,9 +59,9 @@ const PieChartSection = ({ activities }: PieChartSectionProps) => {
         width={width - 16 * 4}
         height={220}
         chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#eff3ff",
-          backgroundGradientTo: "#efefef",
+          backgroundColor: '#1cc910',
+          backgroundGradientFrom: '#eff3ff',
+          backgroundGradientTo: '#efefef',
           decimalPlaces: 2,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
@@ -82,8 +79,8 @@ const PieChartSection = ({ activities }: PieChartSectionProps) => {
         hasLegend={false}
         absolute
       />
-      <View row marginB-16 style={{ flexWrap: "wrap" }}>
-        {activityData.map((dot) => (
+      <View row marginB-16 style={{ flexWrap: 'wrap' }}>
+        {activityData.map(dot => (
           <View row center key={dot.name}>
             <FontAwesome
               name="circle"
@@ -97,14 +94,15 @@ const PieChartSection = ({ activities }: PieChartSectionProps) => {
       </View>
     </>
   );
-};
-type OptionProps = {
+}
+export type OptionProps = {
   color: string;
+  // eslint-disable-next-line react/require-default-props
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
-  children: any;
+  children: JSX.Element | JSX.Element[];
   onPress: () => void;
 };
-const Option = ({ color, style, children, onPress }: OptionProps) => {
+function Option({ color, style = {}, children, onPress }: OptionProps) {
   return (
     <TouchableOpacity
       flex-1
@@ -117,12 +115,12 @@ const Option = ({ color, style, children, onPress }: OptionProps) => {
       {children}
     </TouchableOpacity>
   );
-};
+}
 type ButtonsProps = {
   language: string;
-  navigation: StackNavigationProp<HomeParamList, "HomeScreen">;
+  navigation: StackNavigationProp<HomeParamList, 'HomeScreen'>;
 };
-const Buttons = ({ language, navigation }: ButtonsProps) => {
+function Buttons({ language, navigation }: ButtonsProps) {
   const { showMessage } = useToast();
   return (
     <View>
@@ -130,7 +128,7 @@ const Buttons = ({ language, navigation }: ButtonsProps) => {
         <Option
           color={Colors.primary}
           style={{ marginRight: 8 }}
-          onPress={() => navigation.navigate("AddEntry", { language })}
+          onPress={() => navigation.navigate('AddEntry', { language })}
         >
           <Text text60L white>
             Add
@@ -155,7 +153,7 @@ const Buttons = ({ language, navigation }: ButtonsProps) => {
       <View row marginB-16>
         <Option
           color={Colors.primaryDark}
-          onPress={() => navigation.navigate("ActivityHistory", { language })}
+          onPress={() => navigation.navigate('ActivityHistory', { language })}
         >
           <Text text60L white>
             Check
@@ -167,21 +165,18 @@ const Buttons = ({ language, navigation }: ButtonsProps) => {
       </View>
     </View>
   );
-};
+}
 type LanguageDashboardProps = {
   language: string;
-  navigation: StackNavigationProp<HomeParamList, "HomeScreen">;
+  navigation: StackNavigationProp<HomeParamList, 'HomeScreen'>;
 };
-const LanguageDashboard = ({
-  language,
-  navigation,
-}: LanguageDashboardProps) => {
+function LanguageDashboard({ language, navigation }: LanguageDashboardProps) {
   const { getProgress } = useLanguageProgress(language);
   const [activities, setActivities] = useState<Activity[]>([]);
   useFocusEffect(
     useCallback(() => {
       (async () => setActivities(await getProgress()))();
-    }, [])
+    }, [getProgress]),
   );
 
   return (
@@ -203,14 +198,8 @@ const LanguageDashboard = ({
       </TouchableOpacity> */}
       {!!activities.length && <PieChartSection activities={activities} />}
       <Buttons language={language} navigation={navigation} />
-      {!!activities.length && (
-        <RecentActivity
-          activities={activities}
-          navigation={navigation}
-          language={language}
-        />
-      )}
+      {!!activities.length && <RecentActivity activities={activities} />}
     </ScrollView>
   );
-};
+}
 export default LanguageDashboard;

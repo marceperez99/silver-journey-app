@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FlatList, useWindowDimensions } from "react-native";
+import React, { useState } from 'react';
+import { FlatList, useWindowDimensions } from 'react-native';
 import {
   View,
   Text,
@@ -8,18 +8,19 @@ import {
   TouchableOpacity,
   PanningProvider,
   Dialog,
-} from "react-native-ui-lib";
-import { ToastPresets } from "react-native-ui-lib/src/incubator";
-import NewLanguageSVG from "../assets/newLanguage";
-import { LANGUAGES } from "../constants";
-import { NewLanguage } from "../hooks/useLanguages";
-import { useToast } from "../hooks/useToast";
+} from 'react-native-ui-lib';
+import { ToastPresets } from 'react-native-ui-lib/src/incubator';
+import NewLanguageSVG from '../assets/newLanguage';
+import LineSeparator from '../components/LineSeparator';
+import { LANGUAGES } from '../constants';
+import { NewLanguage } from '../hooks/useLanguages';
+import { useToast } from '../hooks/useToast';
 
-const NewLanguageView = ({
+function NewLanguageView({
   createLanguage,
 }: {
   createLanguage: (data: NewLanguage) => void;
-}) => {
+}) {
   const { width, height } = useWindowDimensions();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { showMessage } = useToast();
@@ -48,7 +49,7 @@ const NewLanguageView = ({
         visible={modalVisible}
         onDismiss={() => setModalVisible(false)}
         containerStyle={{
-          backgroundColor: "white",
+          backgroundColor: 'white',
           padding: 16,
           borderRadius: 8,
         }}
@@ -62,7 +63,7 @@ const NewLanguageView = ({
           <FlatList
             data={Object.values(LANGUAGES)}
             style={{ maxHeight: height / 2 }}
-            keyExtractor={(item) => `${item}`}
+            keyExtractor={item => `${item}`}
             renderItem={({ item }) => (
               <TouchableOpacity
                 paddingV-16
@@ -70,6 +71,7 @@ const NewLanguageView = ({
                   try {
                     await createLanguage({ name: item });
                     setModalVisible(false);
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } catch (e: any) {
                     setModalVisible(false);
                     showMessage(e.message, { style: ToastPresets.FAILURE });
@@ -79,19 +81,12 @@ const NewLanguageView = ({
                 <Text text70L>{item}</Text>
               </TouchableOpacity>
             )}
-            ItemSeparatorComponent={() => (
-              <View
-                style={{
-                  borderBottomColor: Colors.grey70,
-                  borderBottomWidth: 1,
-                }}
-              />
-            )}
+            ItemSeparatorComponent={LineSeparator}
           />
         </View>
       </Dialog>
     </View>
   );
-};
+}
 
 export default NewLanguageView;

@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { useLayoutEffect, useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import {
   View,
   Text,
@@ -8,18 +8,17 @@ import {
   Incubator,
   Typography,
   TouchableOpacity,
-  PanningProvider,
-  Dialog,
-} from "react-native-ui-lib";
-import useActivityType from "../../hooks/useActivityType";
-import { HomeNavProps } from "../types";
+} from 'react-native-ui-lib';
+import useActivityType from '../../hooks/useActivityType';
+import { HomeNavProps } from '../types';
 
-const NewActivityType = ({ navigation }: HomeNavProps<"NewActivityType">) => {
+function NewActivityType({ navigation }: HomeNavProps<'NewActivityType'>) {
   const { save } = useActivityType();
-  const [type, setType] = useState({ name: "", color: "" });
+  const [type, setType] = useState({ name: '', color: '' });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const update = (field: string, value: any) =>
-    setType((prev) => ({ ...prev, [field]: value }));
+    setType(prev => ({ ...prev, [field]: value }));
 
   const [colors, setColors] = useState([
     Colors.red10,
@@ -29,6 +28,7 @@ const NewActivityType = ({ navigation }: HomeNavProps<"NewActivityType">) => {
   ]);
   useLayoutEffect(() => {
     navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <TouchableOpacity
           paddingR-16
@@ -43,15 +43,15 @@ const NewActivityType = ({ navigation }: HomeNavProps<"NewActivityType">) => {
         </TouchableOpacity>
       ),
     });
-  }, [type]);
+  }, [navigation, save, type]);
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View paddingH-16 paddingT-16>
         <Incubator.TextField
           animated
           text
           label="Name"
-          onChangeText={(value) => update("name", value)}
+          onChangeText={value => update('name', value)}
           containerStyle={{
             borderBottomWidth: 1,
             borderBottomColor: Colors.grey50,
@@ -69,12 +69,11 @@ const NewActivityType = ({ navigation }: HomeNavProps<"NewActivityType">) => {
         colors={colors}
         initialColor={Colors.green10}
         value={type.color}
-        onDismiss={() => console.log("dismissed")}
-        onSubmit={(color) => setColors((prev) => [...prev, color])}
-        onValueChange={(c) => update("color", c)}
+        onSubmit={color => setColors(prev => [...prev, color])}
+        onValueChange={c => update('color', c)}
       />
     </ScrollView>
   );
-};
+}
 
 export default NewActivityType;

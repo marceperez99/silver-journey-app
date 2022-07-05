@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   PanningProvider,
   Colors,
@@ -6,7 +6,7 @@ import {
   Text,
   View,
   Button,
-} from "react-native-ui-lib";
+} from 'react-native-ui-lib';
 
 type ConfirmationModalProps = {
   title: string;
@@ -17,7 +17,7 @@ type ConfirmationModalProps = {
   onConfirm: () => void;
   setModalVisible: (v: boolean) => void;
 };
-const ConfirmationModal = ({
+function ConfirmationModal({
   title,
   body,
   confirmLabel,
@@ -25,12 +25,12 @@ const ConfirmationModal = ({
   modalVisible,
   onConfirm,
   setModalVisible,
-}: ConfirmationModalProps) => {
+}: ConfirmationModalProps) {
   return (
     <Dialog
       visible={modalVisible}
       containerStyle={{
-        backgroundColor: "white",
+        backgroundColor: 'white',
         padding: 16,
         borderRadius: 6,
       }}
@@ -62,5 +62,5 @@ const ConfirmationModal = ({
       </View>
     </Dialog>
   );
-};
+}
 export default ConfirmationModal;

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Share } from "react-native";
-import { Button, Colors, Text, View } from "react-native-ui-lib";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ConfirmationModal from "../components/ConfirmationModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-const Settings = ({}) => {
+import React, { useState } from 'react';
+import { Share } from 'react-native';
+import { Button, Colors, Text, View } from 'react-native-ui-lib';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ConfirmationModal from '../components/ConfirmationModal';
+
+function Settings() {
   const [modalVisible, setModalVisible] = useState<boolean>();
   return (
     <SafeAreaView
@@ -15,7 +16,7 @@ const Settings = ({}) => {
       <Button
         marginV-16
         backgroundColor={Colors.grey80}
-        onPress={() => Share.share({ message: "Hola! jaja" })}
+        onPress={() => Share.share({ message: 'Hola! jaja' })}
       >
         <Text text70M>Share with a friend</Text>
       </Button>
@@ -44,6 +45,6 @@ const Settings = ({}) => {
       </Text>
     </SafeAreaView>
   );
-};
+}
 
 export default Settings;

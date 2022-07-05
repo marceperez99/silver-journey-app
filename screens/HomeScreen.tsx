@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,18 +6,18 @@ import {
   Carousel,
   TouchableOpacity,
   ActionSheet,
-  Button,
-} from "react-native-ui-lib";
-import { Ionicons } from "@expo/vector-icons";
-import { HomeNavProps } from "./types";
-import LanguageDashboard from "../components/LanguageDashboard";
-import useLanguages from "../hooks/useLanguages";
-import NewLanguageView from "./NewLanguage";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+} from 'react-native-ui-lib';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { HomeNavProps } from './types';
+import LanguageDashboard from '../components/LanguageDashboard';
+import useLanguages from '../hooks/useLanguages';
+import NewLanguageView from './NewLanguage';
 
-const HomeScreen = ({ navigation }: HomeNavProps<"HomeScreen">) => {
+function HomeScreen({ navigation }: HomeNavProps<'HomeScreen'>) {
   const { top, bottom } = useSafeAreaInsets();
   const { languages, create } = useLanguages();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselRef = useRef<any>(undefined);
   const [language, setLanguage] = useState<string | undefined>(undefined);
   const [actionSheetVisible, setActionSheetVisible] = useState<boolean>(false);
@@ -44,7 +43,7 @@ const HomeScreen = ({ navigation }: HomeNavProps<"HomeScreen">) => {
               <ActionSheet
                 useNativeIOS
                 visible={actionSheetVisible}
-                title={"Select a Language"}
+                title="Select a Language"
                 onDismiss={() => setActionSheetVisible(false)}
                 cancelButtonIndex={languages.length}
                 options={[
@@ -56,7 +55,7 @@ const HomeScreen = ({ navigation }: HomeNavProps<"HomeScreen">) => {
                     },
                   })),
                   {
-                    label: "Cancel",
+                    label: 'Cancel',
                     onPress: () => setActionSheetVisible(false),
                   },
                 ]}
@@ -66,32 +65,32 @@ const HomeScreen = ({ navigation }: HomeNavProps<"HomeScreen">) => {
           <TouchableOpacity
             flex
             right
-            onPress={() => navigation.navigate("Settings")}
+            onPress={() => navigation.navigate('Settings')}
           >
             <Ionicons name="settings-sharp" size={24} color={Colors.grey40} />
           </TouchableOpacity>
         </View>
       )}
       <Carousel
-        ref={(ref) => (carouselRef.current = ref)}
+        ref={ref => {
+          carouselRef.current = ref;
+        }}
         animated
-        onChangePage={(index) => {
+        onChangePage={index => {
           setLanguage(languages[index]?.name);
         }}
       >
-        {Object.values(languages).map((lang) => {
-          return (
-            <LanguageDashboard
-              key={lang.name}
-              language={lang.name}
-              navigation={navigation}
-            />
-          );
-        })}
+        {Object.values(languages).map(lang => (
+          <LanguageDashboard
+            key={lang.name}
+            language={lang.name}
+            navigation={navigation}
+          />
+        ))}
         <NewLanguageView createLanguage={create} />
       </Carousel>
     </View>
   );
-};
+}
 
 export default HomeScreen;

@@ -1,4 +1,4 @@
-interface ActivityType {
+export interface ActivityType {
   uuid?: string;
   name: string;
   color: string;

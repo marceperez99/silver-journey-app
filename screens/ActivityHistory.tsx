@@ -1,36 +1,36 @@
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useCallback, useLayoutEffect, useState } from "react";
-import { ScrollView, useWindowDimensions } from "react-native";
+import React, { useCallback, useLayoutEffect, useState } from 'react';
+import { useWindowDimensions } from 'react-native';
 import {
   Colors,
   Drawer,
   Text,
   TouchableOpacity,
   View,
-} from "react-native-ui-lib";
-import { HomeNavProps } from "./types";
-import { AntDesign } from "@expo/vector-icons";
-import moment from "moment";
-import { useFocusEffect } from "@react-navigation/native";
-import useLanguageProgress from "../hooks/useLanguageProgress";
-import { FlatList } from "react-native-gesture-handler";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import VoidSVG from "../assets/void";
-import ConfirmationModal from "../components/ConfirmationModal";
+} from 'react-native-ui-lib';
+import { AntDesign } from '@expo/vector-icons';
+import moment from 'moment';
+import { useFocusEffect } from '@react-navigation/native';
+import { FlatList } from 'react-native-gesture-handler';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import useLanguageProgress from '../hooks/useLanguageProgress';
+import { HomeNavProps } from './types';
+import VoidSVG from '../assets/void';
+import ConfirmationModal from '../components/ConfirmationModal';
+import LineSeparator from '../components/LineSeparator';
 
-const ListItem = ({
+function ListItem({
   item,
   onDelete,
 }: {
   item: Activity;
   onDelete: () => void;
-}) => {
+}) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   return (
     <Drawer
       rightItems={[
         {
-          text: "Delete",
+          text: 'Delete',
           background: Colors.danger,
           onPress: () => setIsVisible(true),
         },
@@ -56,9 +56,9 @@ const ListItem = ({
       />
     </Drawer>
   );
-};
+}
 
-const EmptyList = () => {
+function EmptyList() {
   const { width, height } = useWindowDimensions();
   return (
     <View center marginT-32>
@@ -68,13 +68,13 @@ const EmptyList = () => {
       </Text>
     </View>
   );
-};
-const ActivityHistory = ({
+}
+function ActivityHistory({
   navigation,
   route: {
     params: { language },
   },
-}: HomeNavProps<"ActivityHistory">) => {
+}: HomeNavProps<'ActivityHistory'>) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [date, setDate] = useState<moment.Moment>(moment());
   const { getProgress, remove } = useLanguageProgress(language);
@@ -84,22 +84,21 @@ const ActivityHistory = ({
     useCallback(() => {
       (async () => {
         setActivities(
-          (await getProgress()).filter((a) => {
-            return date
-              .startOf("day")
-              .isSame(moment.unix(a.date || 0).startOf("day"));
-          })
+          (await getProgress()).filter(a =>
+            date.startOf('day').isSame(moment.unix(a.date || 0).startOf('day')),
+          ),
         );
       })();
-    }, [date])
+    }, [date, getProgress]),
   );
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <TouchableOpacity
           paddingR-16
-          onPress={() => navigation.navigate("AddEntry", { language })}
+          onPress={() => navigation.navigate('AddEntry', { language })}
         >
           <AntDesign name="plus" size={25} color={Colors.primary} />
         </TouchableOpacity>
@@ -116,19 +115,19 @@ const ActivityHistory = ({
         <TouchableOpacity
           paddingH-16
           paddingV-14
-          onPress={() => setDate((prev) => prev.clone().add(-1, "day"))}
+          onPress={() => setDate(prev => prev.clone().add(-1, 'day'))}
         >
           <AntDesign name="left" size={18} color={Colors.primary} />
         </TouchableOpacity>
         <TouchableOpacity flex-1 center onPress={() => setModalVisible(true)}>
           <Text text70M color={Colors.primaryDark}>
-            {date.format("DD/MM/YYYY")}
+            {date.format('DD/MM/YYYY')}
           </Text>
           <DateTimePickerModal
             mode="date"
             display="inline"
             isVisible={modalVisible}
-            onConfirm={(d) => {
+            onConfirm={d => {
               setDate(moment(d));
               setModalVisible(false);
             }}
@@ -138,7 +137,7 @@ const ActivityHistory = ({
         <TouchableOpacity
           paddingH-16
           paddingV-14
-          onPress={() => setDate((prev) => prev.clone().add(1, "day"))}
+          onPress={() => setDate(prev => prev.clone().add(1, 'day'))}
         >
           <AntDesign name="right" size={18} color={Colors.primary} />
         </TouchableOpacity>
@@ -146,18 +145,14 @@ const ActivityHistory = ({
       <FlatList
         style={{ flex: 1 }}
         data={activities}
-        keyExtractor={(item) => `${item.uuid}`}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{ borderBottomColor: Colors.grey60, borderBottomWidth: 1 }}
-          />
-        )}
+        keyExtractor={item => `${item.uuid}`}
+        ItemSeparatorComponent={LineSeparator}
         ListEmptyComponent={EmptyList}
         renderItem={({ item }) => (
           <ListItem
             item={item}
             onDelete={() => {
-              setActivities((prev) => prev.filter((a) => a.uuid !== item.uuid));
+              setActivities(prev => prev.filter(a => a.uuid !== item.uuid));
               if (item.uuid) remove(item.uuid);
             }}
           />
@@ -165,6 +160,6 @@ const ActivityHistory = ({
       />
     </View>
   );
-};
+}
 
 export default ActivityHistory;
