@@ -12,7 +12,12 @@ import {
 import useActivityType from '../../hooks/useActivityType';
 import { HomeNavProps } from '../types';
 
-function NewActivityType({ navigation }: HomeNavProps<'NewActivityType'>) {
+function NewActivityType({
+  navigation,
+  route: {
+    params: { onCreate },
+  },
+}: HomeNavProps<'NewActivityType'>) {
   const { save } = useActivityType();
   const [type, setType] = useState({ name: '', color: '' });
 
@@ -33,7 +38,8 @@ function NewActivityType({ navigation }: HomeNavProps<'NewActivityType'>) {
         <TouchableOpacity
           paddingR-16
           onPress={async () => {
-            await save({ color: type.color, name: type.name });
+            const t = await save({ color: type.color, name: type.name });
+            onCreate(t);
             navigation.goBack();
           }}
         >
@@ -43,7 +49,7 @@ function NewActivityType({ navigation }: HomeNavProps<'NewActivityType'>) {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, save, type]);
+  }, [navigation, save, type, onCreate]);
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View paddingH-16 paddingT-16>

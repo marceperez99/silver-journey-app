@@ -135,7 +135,9 @@ function NewEntryScreen({
           marginT-16
           onPress={() => {
             setVisible(false);
-            navigation.navigate('NewActivityType');
+            navigation.navigate('NewActivityType', {
+              onCreate: value => update('type', value),
+            });
           }}
         >
           <Text text70M blue40 center>

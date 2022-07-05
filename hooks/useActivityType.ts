@@ -22,14 +22,18 @@ const useActivityType = () => {
 
     return lista.length ? lista : defaultTypes;
   }, []);
-  const save = useCallback(async (data: ActivityType) => {
-    const items = await getItem();
-    const lista: ActivityType[] = JSON.parse(items || '[]');
-    const item = { ...data, uuid: `${uuid.v4()}` };
+  const save = useCallback(
+    async (data: ActivityType): Promise<ActivityType> => {
+      const items = await getItem();
+      const lista: ActivityType[] = JSON.parse(items || '[]');
+      const item = { ...data, uuid: `${uuid.v4()}` };
 
-    lista.push(item);
-    setItem(JSON.stringify(lista));
-  }, []);
+      lista.push(item);
+      setItem(JSON.stringify(lista));
+      return item;
+    },
+    [],
+  );
 
   return { getTypes, save };
 };
