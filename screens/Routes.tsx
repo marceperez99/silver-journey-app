@@ -1,11 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import ActivityHistory from "./ActivityHistory";
 import NewActivityType from "./activity_types/NewActivityType";
 import HomeScreen from "./HomeScreen";
 import NewEntryScreen from "./NewEntry";
 import Settings from "./Settings";
+import { HomeParamList } from "./types";
 
-const HomeNavigator = createStackNavigator();
+const HomeNavigator = createStackNavigator<HomeParamList>();
 const Routes = () => {
   return (
     <HomeNavigator.Navigator>
@@ -23,6 +25,11 @@ const Routes = () => {
         name="Settings"
         component={Settings}
         options={{ headerBackTitle: "Back" }}
+      />
+      <HomeNavigator.Screen
+        name="ActivityHistory"
+        component={ActivityHistory}
+        options={{ headerBackTitle: "Back", title: "Activity History" }}
       />
       <HomeNavigator.Screen
         name="NewActivityType"

@@ -125,31 +125,46 @@ type ButtonsProps = {
 const Buttons = ({ language, navigation }: ButtonsProps) => {
   const { showMessage } = useToast();
   return (
-    <View row marginB-16>
-      <Option
-        color={Colors.primary}
-        style={{ marginRight: 8 }}
-        onPress={() => navigation.navigate("AddEntry", { language })}
-      >
-        <Text text60L white>
-          Add
-        </Text>
-        <Text text60 white>
-          Activity Record
-        </Text>
-      </Option>
-      <Option
-        color={Colors.primaryDark}
-        style={{ marginLeft: 8 }}
-        onPress={() => showMessage("I'm working on this. Just hang on!!")}
-      >
-        <Text text60L white>
-          Add
-        </Text>
-        <Text text60 white>
-          Goal
-        </Text>
-      </Option>
+    <View>
+      <View row marginB-16>
+        <Option
+          color={Colors.primary}
+          style={{ marginRight: 8 }}
+          onPress={() => navigation.navigate("AddEntry", { language })}
+        >
+          <Text text60L white>
+            Add
+          </Text>
+          <Text text60 white>
+            Activity Record
+          </Text>
+        </Option>
+        <Option
+          color={Colors.primary}
+          style={{ marginLeft: 8 }}
+          onPress={() => showMessage("I'm working on this. Just hang on!!")}
+        >
+          <Text text60L white>
+            Add
+          </Text>
+          <Text text60 white>
+            Goal
+          </Text>
+        </Option>
+      </View>
+      <View row marginB-16>
+        <Option
+          color={Colors.primaryDark}
+          onPress={() => navigation.navigate("ActivityHistory", { language })}
+        >
+          <Text text60L white>
+            Check
+          </Text>
+          <Text text60 white>
+            Activities
+          </Text>
+        </Option>
+      </View>
     </View>
   );
 };

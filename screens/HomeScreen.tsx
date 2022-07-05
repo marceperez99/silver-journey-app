@@ -14,15 +14,21 @@ import { HomeNavProps } from "./types";
 import LanguageDashboard from "../components/LanguageDashboard";
 import useLanguages from "../hooks/useLanguages";
 import NewLanguageView from "./NewLanguage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = ({ navigation }: HomeNavProps<"HomeScreen">) => {
+  const { top, bottom } = useSafeAreaInsets();
   const { languages, create } = useLanguages();
   const carouselRef = useRef<any>(undefined);
   const [language, setLanguage] = useState<string | undefined>(undefined);
   const [actionSheetVisible, setActionSheetVisible] = useState<boolean>(false);
   useEffect(() => setLanguage(languages[0]?.name), [languages]);
   return (
-    <View useSafeArea flex backgroundColor="white">
+    <View
+      flex
+      backgroundColor="white"
+      style={{ paddingTop: top, paddingBottom: bottom }}
+    >
       {!!languages.length && (
         <View row br10 padding-16>
           <View flex />

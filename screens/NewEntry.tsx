@@ -88,7 +88,7 @@ const NewEntryScreen = ({
         text
         floatingPlaceholder
         padding-16
-        editable={false}
+        showSoftInputOnFocus={false}
         value={activity.type?.name}
         onPressIn={() => setVisible(true)}
         placeholder="Type"

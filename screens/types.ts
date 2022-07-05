@@ -6,6 +6,7 @@ export type HomeParamList = {
   NewActivityType: undefined;
   AddEntry: { language: string };
   Settings: undefined;
+  ActivityHistory: { language: string };
 };
 
 export type HomeNavProps<T extends keyof HomeParamList> = {
