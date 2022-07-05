@@ -15,6 +15,7 @@ import { HomeParamList } from '../screens/types';
 import useLanguageProgress from '../hooks/useLanguageProgress';
 import RecentActivity from './RecentActivity';
 import { useToast } from '../hooks/useToast';
+import { Activity } from '../models/activity';
 
 type PieChartData = {
   name: string;

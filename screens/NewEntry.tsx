@@ -15,6 +15,8 @@ import LineSeparator from '../components/LineSeparator';
 import useActivityType from '../hooks/useActivityType';
 import useLanguageProgress from '../hooks/useLanguageProgress';
 import { useToast } from '../hooks/useToast';
+import { Activity } from '../models/activity';
+import { ActivityType } from '../models/activity_type';
 import { HomeNavProps } from './types';
 
 type TimeSelectorState = {

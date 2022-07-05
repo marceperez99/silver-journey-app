@@ -17,6 +17,7 @@ import { HomeNavProps } from './types';
 import VoidSVG from '../assets/void';
 import ConfirmationModal from '../components/ConfirmationModal';
 import LineSeparator from '../components/LineSeparator';
+import { Activity } from '../models/activity';
 
 function ListItem({
   item,

@@ -12,7 +12,7 @@ import {
 import { ToastPresets } from 'react-native-ui-lib/src/incubator';
 import NewLanguageSVG from '../assets/newLanguage';
 import LineSeparator from '../components/LineSeparator';
-import { LANGUAGES } from '../constants';
+import LANGUAGES from '../constants';
 import { NewLanguage } from '../hooks/useLanguages';
 import { useToast } from '../hooks/useToast';
 

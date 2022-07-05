@@ -1,6 +1,7 @@
 import React from 'react';
 import { Colors, View, Text } from 'react-native-ui-lib';
 import moment from 'moment';
+import { Activity } from '../models/activity';
 
 type RecentActivityProps = {
   activities: Activity[];

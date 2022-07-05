@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
+import { Language } from '../models/language';
 
 export type NewLanguage = {
   name: string;
@@ -17,20 +19,17 @@ const useLanguages = (): {
   useFocusEffect(
     useCallback(() => {
       (async () => setLanguages(JSON.parse((await getItem()) || '[]')))();
-    }, [getItem]),
+    }, []),
   );
 
-  const create = useCallback(
-    async ({ name }: NewLanguage): Promise<void> => {
-      const items: Language[] = JSON.parse((await getItem()) || '[]');
-      if (items.some(item => item.name === name))
-        throw new Error('Language already registered');
-      items.push({ name, createdAt: moment().unix() });
-      setLanguages(items);
-      setItem(JSON.stringify(items));
-    },
-    [getItem, setItem],
-  );
+  const create = useCallback(async ({ name }: NewLanguage): Promise<void> => {
+    const items: Language[] = JSON.parse((await getItem()) || '[]');
+    if (items.some(item => item.name === name))
+      throw new Error('Language already registered');
+    items.push({ name, createdAt: moment().unix() });
+    setLanguages(items);
+    setItem(JSON.stringify(items));
+  }, []);
   return { languages, create };
 };
 
