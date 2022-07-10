@@ -2,6 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { LogBox } from 'react-native';
 import { Colors } from 'react-native-ui-lib';
 import { ToastProvider } from './hooks/useToast';
 import Routes from './screens/Routes';
@@ -24,7 +25,9 @@ Colors.loadSchemes({
     danger: '#D7415D',
   },
 });
-
+LogBox.ignoreLogs([
+  /Non-serializable values were found in the navigation state.*/,
+]);
 export default function App() {
   return (
     <NavigationContainer>

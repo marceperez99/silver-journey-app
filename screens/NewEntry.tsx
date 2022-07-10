@@ -19,7 +19,7 @@ import { Activity } from '../models/activity';
 import { ActivityType } from '../models/activity_type';
 import { HomeNavProps } from './types';
 
-type TimeSelectorState = {
+export type TimeSelectorState = {
   hours: number;
   minutes: number;
 };

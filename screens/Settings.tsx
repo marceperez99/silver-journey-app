@@ -4,8 +4,9 @@ import { Button, Colors, Text, View } from 'react-native-ui-lib';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfirmationModal from '../components/ConfirmationModal';
+import { HomeNavProps } from './types';
 
-function Settings() {
+function Settings({ navigation }: HomeNavProps<'Settings'>) {
   const [modalVisible, setModalVisible] = useState<boolean>();
   return (
     <SafeAreaView
@@ -38,6 +39,7 @@ function Settings() {
         onConfirm={() => {
           AsyncStorage.clear();
           setModalVisible(false);
+          navigation.goBack();
         }}
       />
       <Text center marginT-16>

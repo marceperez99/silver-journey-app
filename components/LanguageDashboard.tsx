@@ -14,7 +14,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeParamList } from '../screens/types';
 import useLanguageProgress from '../hooks/useLanguageProgress';
 import RecentActivity from './RecentActivity';
-import { useToast } from '../hooks/useToast';
+
 import { Activity } from '../models/activity';
 
 type PieChartData = {
@@ -122,7 +122,6 @@ type ButtonsProps = {
   navigation: StackNavigationProp<HomeParamList, 'HomeScreen'>;
 };
 function Buttons({ language, navigation }: ButtonsProps) {
-  const { showMessage } = useToast();
   return (
     <View>
       <View row marginB-16>
@@ -141,13 +140,13 @@ function Buttons({ language, navigation }: ButtonsProps) {
         <Option
           color={Colors.primary}
           style={{ marginLeft: 8 }}
-          onPress={() => showMessage("I'm working on this. Just hang on!!")}
+          onPress={() => navigation.navigate('ScheduleList', { language })}
         >
           <Text text60L white>
-            Add
+            Check
           </Text>
           <Text text60 white>
-            Goal
+            Schedule
           </Text>
         </Option>
       </View>
@@ -181,22 +180,10 @@ function LanguageDashboard({ language, navigation }: LanguageDashboardProps) {
   );
 
   return (
-    <ScrollView style={{ padding: 16 }}>
-      {/* <TouchableOpacity
-        row
-        padding-16
-        marginB-16
-        br30
-        activeOpacity={0.6}
-        backgroundColor={Colors.primaryDark}
-      >
-        <View flex>
-          <Text text50M color={Colors.textColor}>
-            10-day streak! 🎉
-          </Text>
-        </View>
-        <Entypo name="chevron-right" size={24} color={Colors.white} />
-      </TouchableOpacity> */}
+    <ScrollView
+      style={{ paddingHorizontal: 16 }}
+      contentContainerStyle={{ paddingBottom: 16 }}
+    >
       {!!activities.length && <PieChartSection activities={activities} />}
       <Buttons language={language} navigation={navigation} />
       {!!activities.length && <RecentActivity activities={activities} />}

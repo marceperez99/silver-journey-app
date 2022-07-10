@@ -9,27 +9,25 @@ import {
 } from 'react-native-ui-lib';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 import { HomeNavProps } from './types';
 import LanguageDashboard from '../components/LanguageDashboard';
 import useLanguages from '../hooks/useLanguages';
 import NewLanguageView from './NewLanguage';
 
 function HomeScreen({ navigation }: HomeNavProps<'HomeScreen'>) {
-  const { top, bottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
   const { languages, create } = useLanguages();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselRef = useRef<any>(undefined);
   const [language, setLanguage] = useState<string | undefined>(undefined);
   const [actionSheetVisible, setActionSheetVisible] = useState<boolean>(false);
   useEffect(() => setLanguage(languages[0]?.name), [languages]);
+
   return (
-    <View
-      flex
-      backgroundColor="white"
-      style={{ paddingTop: top, paddingBottom: bottom }}
-    >
+    <SafeAreaView style={{ paddingBottom: bottom }}>
       {!!languages.length && (
-        <View row br10 padding-16>
+        <View row br10 paddingH-16 paddingV-8>
           <View flex />
           <TouchableOpacity
             flex-2
@@ -89,7 +87,7 @@ function HomeScreen({ navigation }: HomeNavProps<'HomeScreen'>) {
         ))}
         <NewLanguageView createLanguage={create} />
       </Carousel>
-    </View>
+    </SafeAreaView>
   );
 }
 

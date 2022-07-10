@@ -16,7 +16,14 @@ const useLanguageProgress = (language: string) => {
   const save = useCallback(
     async (activity: Activity) => {
       const items: Activity[] = JSON.parse((await getItem()) || '[]');
-      items.push({ ...activity, uuid: `${uuid.v4()}`, date: moment().unix() });
+      const now = moment().unix();
+
+      items.push({
+        ...activity,
+        uuid: `${uuid.v4()}`,
+        date: activity.date || now,
+        timestamp: now,
+      });
       setItem(JSON.stringify(items));
     },
     [getItem, setItem],

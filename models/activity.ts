@@ -1,3 +1,5 @@
+import { ActivityType } from './activity_type';
+
 export interface Activity {
   uuid?: string;
   type: ActivityType;
@@ -5,4 +7,5 @@ export interface Activity {
   date?: number;
   user?: string;
   duration: number;
+  timestamp?: number;
 }
