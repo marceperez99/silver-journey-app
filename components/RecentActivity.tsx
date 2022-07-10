@@ -19,11 +19,12 @@ function RecentActivity({ activities }: RecentActivityProps) {
 
       {activities.slice(0, 5).map(a => (
         <View key={`${a.timestamp}`} row marginV-8>
-          <View flex>
+          <View centerV paddingR-8>
             <Text text70L>{moment.unix(a.date || 0).format('DD/MM/YYYY')}</Text>
           </View>
-          <View flex-3>
-            <Text text70M>{a.description}</Text>
+          <View flex>
+            <Text text70M>{a.type.name}</Text>
+            {!!a.description && <Text text80L>{a.description}</Text>}
           </View>
         </View>
       ))}
