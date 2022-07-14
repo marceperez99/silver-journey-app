@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { LogBox } from 'react-native';
 import { Colors } from 'react-native-ui-lib';
+import * as Notifications from 'expo-notifications';
 import { ToastProvider } from './hooks/useToast';
 import Routes from './screens/Routes';
 
@@ -28,6 +29,13 @@ Colors.loadSchemes({
 LogBox.ignoreLogs([
   /Non-serializable values were found in the navigation state.*/,
 ]);
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 export default function App() {
   return (
     <NavigationContainer>

@@ -72,7 +72,7 @@ function ScheduleList({
   },
 }: HomeNavProps<'ScheduleList'>) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [date, setDate] = useState<moment.Moment>(moment());
+  const [date, setDate] = useState<moment.Moment>(moment().startOf('day'));
   const { getSchedule } = useSchedule();
   const [activities, setActivities] = useState<Schedule[]>([]);
 
